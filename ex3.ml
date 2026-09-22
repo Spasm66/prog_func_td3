@@ -10,14 +10,11 @@ let z = 12, (true, "mas")
 
 (*ex 3.4*)
 type carburant = Diesel | Essence | Electrique
-type vehicule = {
-    carburant c;
-    int nb_roues;
-}
-let clio = vehicule(Diesel, 4)
-let make_vehicule c n = vehicule(c, n)
-let carburant_of v = v.c
-let nb_weels_of v = v.nb_roues
+type vehicule = Vehicule of carburant * int
+let clio = Vehicule(Diesel, 4)
+let make_vehicule c n = Vehicule(c, n)
+let carburant_of v = fst v
+let nb_weels_of v = snd v
 let can_run v = if carburant_of v = Diesel && nb_weels_of v >= 4
     then false else true
 let consommation v n = let p_km = match carburant_of v with
