@@ -13,15 +13,17 @@ type carburant = Diesel | Essence | Electrique
 type vehicule = Vehicule of carburant * int
 let clio = Vehicule(Diesel, 4)
 let make_vehicule c n = Vehicule(c, n)
-let carburant_of v = fst v
-let nb_weels_of v = snd v
+let carburant_of v = match v with
+| Vehicule(c, _) -> c
+let nb_weels_of v = match v with
+| Vehicule(_, n) -> n
 let can_run v = if carburant_of v = Diesel && nb_weels_of v >= 4
     then false else true
-let consommation v n = let p_km = match carburant_of v with
+let consommation v n = let n_float = float_of_int n in let p_km = match carburant_of v with
     | Diesel -> (6. *. 1.5) /. 100.
     | Essence -> (8. *. 1.5) /. 100.
     | Electrique -> (10. *. 0.25) /. 100.
-    in p_km *. n
+    in p_km *. n_float
 
 (*ex 3.5*)
 type date = {
